@@ -43,16 +43,16 @@ Could not get a working implementation of the program - using given minimal vers
 
 - **Scenario**: Navigate to add task and submit form
 - **Action**: Go to add task, enter a value e.g. testing and click "Add Task" button
-- **Success**: Page updates to show "Task "\<task\>" added successfully." at the top of the page
+- **Success**: Page updates to show 'Task "\<task\>" added successfully.' at the top of the page
 - **Target time**: 4s
 - **Linked to**: Week 6 Job Story #2
 
-#### [Task 2 (T2): View contrast between foreground and background in dark mode]{.header}
+#### [Task 2 (T2): Change contrast from light to dark]{.header}
 
-- **Scenario**: On page load, is there a good foreground/background contrast
-- **Action**: Load the webpage
-- **Success**: All instructions, button labels, etc. easily readable
-- **Target time**: 2s
+- **Scenario**: On page load, contrast can switch from light to dark and vice versa
+- **Action**: Load the webpage, change page contrast
+- **Success**: All instructions, button labels, etc. easily readable in both themes
+- **Target time**: 6s
 - **Linked to**: Week 6 Job Story #1
 
 #### [Task 3 (T3): No keyboard tap]{.header}
@@ -71,6 +71,22 @@ Could not get a working implementation of the program - using given minimal vers
 - **Target time**: 14-16s
 - **Linked to**: [WCAG 3.2.2 On Input (A)](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html)
 
+#### [Task 5 (T5): View contrast between foreground and background in dark mode]{.header}
+
+- **Scenario**: On page load, is there a good foreground/background contrast
+- **Action**: Change browser settings to force darkmode, load the webpage
+- **Success**: All instructions, button labels, etc. easily readable
+- **Target time**: 2s
+- **Linked to**: Week 6 Job Story #1
+
+#### [Task 6 (T6): Subtitles when screenreader speaks]{.header}
+
+- **Scenario**: When screenreader is used, everything said appears as a subtitle of sufficient font size
+- **Action**: Perform an action on the task manager and confirm that the screenreader both speaks and the spoken words appears on the screen as closed subtitles
+- **Success**: sr speaks with subtitles appearing
+- **Target time**: 8s
+- **Linked to**: Week 6 Job Story #5
+
 ---
 
 ### [Consent Script (They Read Verbatim)]{.header}
@@ -84,7 +100,7 @@ Could not get a working implementation of the program - using given minimal vers
 - "I may take screenshots and notes. I'll remove any identifying information."
 - "Do you consent to participate?" \[Wait for verbal yes\]
 
-**Recorded consent timestamp**: \[e.g., "P1 consented 22/11/2025 14:05"\]
+**Recorded consent timestamp**: P1 consented 01/12/2025 13:30
 
 ---
 
@@ -117,11 +133,11 @@ SR errors not announced metrics.csv L47-49 + P2 notes 14:23 P2: "I didn't hear a
 1.  **Identify finding**: From pilot observations, metrics.csv anomalies (high times, errors), or WCAG violations
 2.  **Link data source**: Cite specific metrics.csv line numbers (e.g., "L47-49") OR pilot notes timestamps (e.g., "P2 notes 14:23")
 3.  **Check WCAG**: If accessibility-related, find the criterion using [W3C WCAG 2.2 Quick Reference](https://www.w3.org/WAI/WCAG22/quickref/)
-4.  **Score priority**: Use [Week 10 Lab 1 prioritisation scales](../wk10/wk10-lab1-analysis-prioritisation.html#prioritisation-framework) to rate Impact (1-5), Inclusion (1-5), Effort (1-5), then calculate Priority = (Impact + Inclusion) - Effort
+4.  **Score priority**: Use [Week 10 Lab 1 prioritisation scales](../../comp2850-hci-starter/wk10/wk10-lab1-analysis-prioritisation.html#prioritisation-framework) to rate Impact (1-5), Inclusion (1-5), Effort (1-5), then calculate Priority = (Impact + Inclusion) - Effort
 
 ---
 
-## [3. Pilot Metrics (metrics.csv)](#3-pilot-metrics-metricscsv){.header} {#3-pilot-metrics-metricscsv}
+## [3. Pilot Metrics (metrics.csv)](../data/metrics.csv){.header} {#3-pilot-metrics-metricscsv}
 
 **Instructions**: Paste your raw CSV data here OR attach metrics.csv file
 
