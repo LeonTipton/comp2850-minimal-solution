@@ -104,29 +104,24 @@ Could not get a working implementation of the program - using given minimal vers
 
 ---
 
-## [2. Findings Table](#2-findings-table){.header} {#2-findings-table}
+## [2. Findings Table](./evidence/findings-table.csv){.header} {#2-findings-table}
 
 **Instructions**: Fill in this table with 3-5 findings from your pilots. Link each finding to data sources.
 
-::: table-wrapper
-Finding Data Source Observation (Quote/Timestamp) WCAG Impact (1-5) Inclusion (1-5) Effort (1-5) Priority
-
----
-
-SR errors not announced metrics.csv L47-49 + P2 notes 14:23 P2: "I didn't hear any error" 3.3.1 Level A 5 5 3 7
-\[Your finding 2\] \[Link to metrics.csv line OR pilot notes\] \[Participant quote + timestamp\] \[WCAG criterion\] \[1-5\] \[1-5\] \[1-5\] \[Score\]
-\[Your finding 3\]  
- \[Your finding 4\]  
- \[Your finding 5\]  
-:::
+| Finding                                      | Data Source                | Observation (Quote/Timestamp)             | WCAG Impact (1-5) | Inclusion (1-5) | Effort (1-5) | Priority |
+| -------------------------------------------- | -------------------------- | ----------------------------------------- | ----------------- | --------------- | ------------ | -------- | --- |
+| Comment appears as required                  | T1_evidence.png            | "topline comment appears on submit"       | 4.1.3             | 1               | 1            | 1        | 1   |
+| No method implemented to swap colour schemes | P1 notes + T2_evidence.png | "no way of changing theme in the webpage" | 1.4.3             | 4               | 3            | 2        | 5   |
+| Controlling page with tabs/enter easy        | T3_evidence.png            | "easy to navigate around page"            | 2.1.2             | 1               | 1            | 1        | 1   |
+| ...                                          | ...                        | ...                                       | ...               | ...             | ...          | ...      |
 
 **Priority formula**: (Impact + Inclusion) - Effort
 
 **Top 3 priorities for redesign**:
 
-1.  \[Finding #X - Priority score Y\]
-2.  \[Finding #X - Priority score Y\]
-3.  \[Finding #X - Priority score Y\]
+1.  SR speaks but no subtitles
+2.  No method for theme change
+3.  Updating task counter
 
 **How to complete this table** (decision tree):
 
@@ -141,20 +136,14 @@ SR errors not announced metrics.csv L47-49 + P2 notes 14:23 P2: "I didn't hear a
 
 **Instructions**: Paste your raw CSV data here OR attach metrics.csv file
 
-```csv
-ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
-2025-11-22T14:18:23.456Z,P1_a7f3,req_001,T1_add,success,,890,200,on
-[Your metrics data here - all rows from Logger.kt output]
-```
+> [metrics.csv](../data/metrics.csv)
 
 **Participant summary**:
 
-- **P1**: \[Variant - e.g., "Standard mouse + HTMX"\]
-- **P2**: \[Variant - e.g., "Keyboard-only, HTMX-on"\]
-- **P3** (if applicable): \[Variant\]
-- **P4** (if applicable): \[Variant\]
+- **P1**: Variant - "Standard mouse + HTMX"
+- **P2**: Variant - "Keyboard only + js off"
 
-**Total participants**: \[n=2, 3, or 4\]
+**Total participants**: 2
 
 ---
 
