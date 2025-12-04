@@ -5,4 +5,5 @@ Controlling page with tabs/enter easy,T3_evidence.png,"easy to navigate around p
 Mouse hover does not change functionality/perform an operation,T4_evidence.png,"no change to site on hover",3.2.2,1,1,1,1
 Dark mode contrast is sufficient,T5_evidence.png,"everything is easily readable",1.4.3,1,1,1,1
 SR speaks but no subtitles provided,T6_evidence.png,"no subtitles seen",3.3.1,4,5,3,6
-Doesn't update the task counter once tasks are added,T&_no-update.png,"not adding to total number of tasks without reloading page",N/A,2,1,1,2
+Doesn't update the task counter once tasks are added,T7_no-update.png,"not adding to total number of tasks without reloading page",N/A,2,1,1,2
+Difficult to navigate on tabs with js off,P2 notes,"keeps navigating tothe top of the page ruining fluidity in adding lots of tasks simultaneously",2.1.1,3,4,3,4
