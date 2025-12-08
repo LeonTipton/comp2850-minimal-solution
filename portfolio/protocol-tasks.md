@@ -100,7 +100,7 @@ Could not get a working implementation of the program - using given minimal vers
 - "I may take screenshots and notes. I'll remove any identifying information."
 - "Do you consent to participate?" \[Wait for verbal yes\]
 
-**Recorded consent timestamp**: P1 consented 01/12/2025 13:30
+**Recorded consent timestamp**: P1 consented 01/12/2025 13:30, P2 consented 6/12/2025
 
 ---
 
