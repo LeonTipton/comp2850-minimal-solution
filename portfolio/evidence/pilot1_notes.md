@@ -6,6 +6,8 @@ No changes to any component when hovering over elements
 After manually changing browser theme, there were no issues with readability in dark mode
 No subtitles when SR speaks
 
+Would like to be able to add more detail to each task
+
 P2_notes:
 Popup appears on submission of a task
 No obvious method for changing theme

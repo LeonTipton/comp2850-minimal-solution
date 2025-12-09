@@ -108,12 +108,12 @@ Could not get a working implementation of the program - using given minimal vers
 
 **Instructions**: Fill in this table with 3-5 findings from your pilots. Link each finding to data sources.
 
-| Finding                                      | Data Source                | Observation (Quote/Timestamp)             | WCAG Impact (1-5) | Inclusion (1-5) | Effort (1-5) | Priority |
-| -------------------------------------------- | -------------------------- | ----------------------------------------- | ----------------- | --------------- | ------------ | -------- | --- |
-| Comment appears as required                  | T1_evidence.png            | "topline comment appears on submit"       | 4.1.3             | 1               | 1            | 1        | 1   |
-| No method implemented to swap colour schemes | P1 notes + T2_evidence.png | "no way of changing theme in the webpage" | 1.4.3             | 4               | 3            | 2        | 5   |
-| Controlling page with tabs/enter easy        | T3_evidence.png            | "easy to navigate around page"            | 2.1.2             | 1               | 1            | 1        | 1   |
-| ...                                          | ...                        | ...                                       | ...               | ...             | ...          | ...      |
+| Finding                                      | Data Source                | Observation (Quote/Timestamp)             | WCAG  | Impact (1-5) | Inclusion (1-5) | Effort (1-5) | Priority |
+| -------------------------------------------- | -------------------------- | ----------------------------------------- | ----- | ------------ | --------------- | ------------ | -------- |
+| Comment appears as required                  | T1_evidence.png            | "topline comment appears on submit"       | 4.1.3 | 1            | 1               | 1            | 1        |
+| No method implemented to swap colour schemes | P1 notes + T2_evidence.png | "no way of changing theme in the webpage" | 1.4.3 | 4            | 3               | 2            | 5        |
+| Controlling page with tabs/enter easy        | T3_evidence.png            | "easy to navigate around page"            | 2.1.2 | 1            | 1               | 1            | 1        |
+| ...                                          | ...                        | ...                                       | ...   | ...          | ...             | ...          | ...      |
 
 **Priority formula**: (Impact + Inclusion) - Effort
 
