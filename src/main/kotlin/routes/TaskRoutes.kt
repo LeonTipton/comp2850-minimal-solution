@@ -314,8 +314,8 @@ private fun messageStatusFragment(
     isError: Boolean = false,
 ): String {
     val role = if (isError) "alert" else "status"
-    val ariaLive = if (isError) """ aria-live="assertive"""" else """ aria-live="polite""""
-    val cssClass = if (isError) """ class="error"""" else ""
+    val ariaLive = if (isError) " aria-live=\"assertive\"" else " aria-live=\"polite\""
+    val cssClass = if (isError) " class=\"error\"" else ""
     return """<div id="status" hx-swap-oob="true" role="$role"$ariaLive$cssClass>$message</div>"""
 }
 
@@ -359,7 +359,10 @@ private suspend fun ApplicationCall.handleUpdateTask(store: TaskStore) {
         return
     }
 
-    val newTitle = receiveParameters()["title"]?.trim() ?: ""
+    // Read form parameters once (body is consumable only once)
+    val params = receiveParameters()
+    val newTitle = params["title"]?.trim() ?: ""
+    val newDetails = params["details"]?.trim() ?: ""
     val validation = Task.validate(newTitle)
 
     if (validation is ValidationResult.Error) {
@@ -377,8 +380,8 @@ private suspend fun ApplicationCall.handleUpdateTask(store: TaskStore) {
         return
     }
 
-    // Update task
-    val updated = task.copy(title = newTitle)
+    // Update task (title and details)
+    val updated = task.copy(title = newTitle, details = newDetails)
     store.update(updated)
 
     if (isHtmxRequest()) {
