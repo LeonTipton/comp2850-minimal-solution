@@ -41,7 +41,7 @@ class TaskStoreTest {
 
     @Test
     fun `add task persists to CSV`() {
-        val task = Task(title = "Test task")
+        val task = Task(title = "Test task", details = "Details")
         store.add(task)
 
         val tasks = store.getAll()
@@ -51,7 +51,7 @@ class TaskStoreTest {
 
     @Test
     fun `getById returns correct task`() {
-        val task = Task(id = "test-123", title = "Test task")
+        val task = Task(id = "test-123", title = "Test task", details = "Details")
         store.add(task)
 
         val retrieved = store.getById("test-123")
@@ -61,7 +61,7 @@ class TaskStoreTest {
 
     @Test
     fun `delete removes task from storage`() {
-        val task = Task(id = "test-456", title = "To be deleted")
+        val task = Task(id = "test-456", title = "To be deleted", details = "Details")
         store.add(task)
 
         store.delete("test-456")
@@ -72,7 +72,7 @@ class TaskStoreTest {
 
     @Test
     fun `toggleComplete updates completion status`() {
-        val task = Task(id = "test-789", title = "Toggle me", completed = false)
+        val task = Task(id = "test-789", title = "Toggle me", details = "Details", completed = false)
         store.add(task)
 
         store.toggleComplete("test-789")
@@ -84,9 +84,9 @@ class TaskStoreTest {
 
     @Test
     fun `search filters tasks by query`() {
-        store.add(Task(title = "Meeting with team"))
-        store.add(Task(title = "Write report"))
-        store.add(Task(title = "Team meeting notes"))
+        store.add(Task(title = "Meeting with team", details = "Details"))
+        store.add(Task(title = "Write report", details = "Details"))
+        store.add(Task(title = "Team meeting notes", details = "Details"))
 
         val results = store.search("meeting")
         assertEquals(2, results.size)
@@ -95,7 +95,7 @@ class TaskStoreTest {
 
     @Test
     fun `update modifies existing task`() {
-        val task = Task(id = "test-update", title = "Original title", completed = false)
+        val task = Task(id = "test-update", title = "Original title", details = "Details", completed = false)
         store.add(task)
 
         val updated = task.copy(title = "Updated title", completed = true)

@@ -1,33 +1,60 @@
 <li id="task-{{ task.id }}" class="task-edit">
-  <form action="/tasks/{{ task.id }}/edit" method="post"
-        hx-post="/tasks/{{ task.id }}/edit"
-        hx-target="#task-{{ task.id }}"
-        hx-swap="outerHTML">
-
+  <form
+    action="/tasks/{{ task.id }}/edit"
+    method="post"
+    hx-post="/tasks/{{ task.id }}/edit"
+    hx-target="#task-{{ task.id }}"
+    hx-swap="outerHTML"
+  >
     <label for="title-{{ task.id }}">Title</label>
-    <input type="text"
-           id="title-{{ task.id }}"
-           name="title"
-           value="{{ task.title }}"
-           required
-           autofocus
-           aria-describedby="hint-{{ task.id }}{% if error %} error-{{ task.id }}{% endif %}">
+    <input
+      type="text"
+      id="title-{{ task.id }}"
+      name="title"
+      value="{{ task.title }}"
+      required
+      autofocus
+      aria-describedby="hint-{{ task.id }}{% if error %} error-{{
+        task.id
+      }}{% endif %}"
+    />
 
     <small id="hint-{{ task.id }}">Keep it short and specific.</small>
 
     {% if error %}
-      <p id="error-{{ task.id }}" class="error" role="alert" aria-live="assertive">
-        {{ error }}
-      </p>
+    <p
+      id="error-{{ task.id }}"
+      class="error"
+      role="alert"
+      aria-live="assertive"
+    >
+      {{ error }}
+    </p>
     {% else %}
-      <p id="error-{{ task.id }}" class="visually-hidden" aria-live="assertive"></p>
+    <p
+      id="error-{{ task.id }}"
+      class="visually-hidden"
+      aria-live="assertive"
+    ></p>
     {% endif %}
 
+    <label for="details-{{ task.id }}">Details</label>
+    <input
+      type="text"
+      id="details-{{ task.id }}"
+      name="details"
+      value="{{ task.details }}"
+      aria-describedby="hint-{{ task.id }}"
+    />
+
     <button type="submit">Save</button>
-    <a href="/tasks"
-       hx-get="/tasks/{{ task.id }}/view"
-       hx-target="#task-{{ task.id }}"
-       hx-swap="outerHTML"
-       role="button">Cancel</a>
+    <a
+      href="/tasks"
+      hx-get="/tasks/{{ task.id }}/view"
+      hx-target="#task-{{ task.id }}"
+      hx-swap="outerHTML"
+      role="button"
+      >Cancel</a
+    >
   </form>
 </li>

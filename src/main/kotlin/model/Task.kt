@@ -19,6 +19,7 @@ import java.util.UUID
 data class Task(
     val id: String = UUID.randomUUID().toString(),
     val title: String,
+    val details: String,
     val completed: Boolean = false,
     val createdAt: LocalDateTime = LocalDateTime.now(),
 ) {
@@ -80,7 +81,8 @@ data class Task(
     fun toCSV(): String {
         val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
         val escapedTitle = title.replace("\"", "\"\"")
-        return "$id,\"$escapedTitle\",$completed,${createdAt.format(formatter)}"
+        val escapedDetails = details.replace("\"", "\"\"")
+        return "$id,\"$escapedTitle\",\"$escapedDetails\",$completed,${createdAt.format(formatter)}"
     }
 
     /**
@@ -101,6 +103,7 @@ data class Task(
         mapOf(
             "id" to id,
             "title" to title,
+            "details" to details,
             "completed" to completed,
             "createdAt" to createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
             "createdAtISO" to createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
