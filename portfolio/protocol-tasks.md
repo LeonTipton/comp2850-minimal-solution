@@ -183,9 +183,7 @@ Could not get a working implementation of the program - using given minimal vers
 
 **Before**:
 
-```kotlin
-[Original code]
-```
+No prior implementation
 
 **After**:
 
