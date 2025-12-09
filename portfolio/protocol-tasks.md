@@ -9,7 +9,7 @@
 - I confirm all participants gave informed consent
 - I confirm this work is my own (AI tools used for code assistance are cited below)
 
-**AI tools used** (if any): N/A
+**AI tools used** (if any): Used AI to help build the Light/Dark mode button as this is a quite a difficult implement.
 
 Could not get a working implementation of the program - using given minimal version
 
@@ -120,8 +120,8 @@ Could not get a working implementation of the program - using given minimal vers
 **Top 3 priorities for redesign**:
 
 1.  SR speaks but no subtitles
-2.  No method for theme change
-3.  Updating task counter
+2.  Updating task counter
+3.  No method for theme change
 
 **How to complete this table** (decision tree):
 
@@ -177,9 +177,9 @@ Could not get a working implementation of the program - using given minimal vers
 
 ---
 
-### [Fix 2: \[Fix Name\]](#fix-2-fix-name){.header}
+### [Fix 2: Updaing page to include a mode switching button](#fix-2-fix-name){.header}
 
-**Addresses finding**: \[Finding #X\]
+**Addresses finding**: 2 (No method implemented to swap colour schemes)
 
 **Before**:
 
@@ -189,15 +189,258 @@ Could not get a working implementation of the program - using given minimal vers
 
 **After**:
 
-```kotlin
-[Fixed code]
+```html
+<!-- body.peb -->
+<script src="/static/js/theme-toggle.js"></script>
+
+<!-- _nav.peb -->
+<li>
+  <button
+    id="theme-toggle"
+    class="theme-toggle-container"
+    type="button"
+    aria-pressed="false"
+    aria-label="Toggle dark mode"
+  >
+    Dark
+  </button>
+</li>
+
+<!-- index.peb -->
+<article id="main-article"></article>
 ```
 
-**What changed**:
+```js
+(function () {
+  const storageKey = "theme";
+  const className = "dark";
 
-**Why**:
+  function applyThemeFromStorage() {
+    const saved = localStorage.getItem(storageKey);
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const useDark = saved ? saved === "dark" : prefersDark;
+    if (useDark) document.documentElement.classList.add(className);
+  }
 
-**Impact**:
+  function updateToggleButton(btn) {
+    if (!btn) return;
+    const isDark = document.documentElement.classList.contains(className);
+    btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+    btn.textContent = isDark ? "Light" : "Dark";
+  }
+
+  function toggleTheme(evt) {
+    const btn =
+      evt && evt.currentTarget
+        ? evt.currentTarget
+        : document.getElementById("theme-toggle");
+    const isNowDark = document.documentElement.classList.toggle(className);
+    localStorage.setItem(storageKey, isNowDark ? "dark" : "light");
+    updateToggleButton(btn);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    applyThemeFromStorage();
+    const btn = document.getElementById("theme-toggle");
+    updateToggleButton(btn);
+    if (btn) btn.addEventListener("click", toggleTheme);
+  });
+})();
+```
+
+```css
+/* ========================================
+   Theme toggle and dark mode
+   ======================================== */
+.theme-toggle-container {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+#theme-toggle {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Dark theme overrides when `dark` class is added to <html> */
+html.dark body {
+  background: #121212;
+  color: #e6e6e6;
+}
+
+html.dark a {
+  color: #90caf9;
+}
+
+html.dark .task-item {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+html.dark #status {
+  background: #263238;
+  border-left-color: #90caf9;
+  color: #e1f5fe;
+}
+
+html.dark .task-item .task-title {
+  color: #fff;
+}
+
+html.dark #theme-toggle {
+  background: #90caf9;
+  color: #000;
+}
+
+/* Make form controls follow dark theme so forms don't stay light */
+html.dark input,
+html.dark textarea,
+html.dark select,
+html.dark .form-control {
+  background-color: #222 !important;
+  border: 1px solid #444 !important;
+  color: #e6e6e6 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #9e9e9e !important;
+  opacity: 1;
+}
+
+html.dark label {
+  color: #dcdcdc;
+}
+
+html.dark option {
+  background: #222;
+  color: #e6e6e6;
+}
+
+/* Card / panel backgrounds used by forms */
+html.dark .card,
+html.dark fieldset,
+html.dark form {
+  background: #181818;
+  border-color: #2b2b2b;
+  color: #e6e6e6;
+}
+
+/* Autofill fixes for Chrome-based browsers */
+html.dark input:-webkit-autofill,
+html.dark textarea:-webkit-autofill,
+html.dark select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #222 inset !important;
+  box-shadow: 0 0 0 30px #222 inset !important;
+  -webkit-text-fill-color: #e6e6e6 !important;
+}
+
+/* Ensure primary buttons remain readable in dark mode */
+html.dark button {
+  background: #1976d2 !important;
+  color: #fff !important;
+  border: 1px solid #2b6fa6 !important;
+}
+
+/* Ensure article/main content follows dark theme */
+html.dark main,
+html.dark .container,
+html.dark #main-article,
+html.dark .content,
+html.dark .lead,
+html.dark .card,
+html.dark .panel {
+  background: #121212;
+  color: #e6e6e6;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #fff;
+}
+
+html.dark p,
+html.dark li,
+html.dark dd,
+html.dark dt {
+  color: #dcdcdc;
+}
+
+html.dark blockquote {
+  background: #161616;
+  border-left: 4px solid #333;
+  color: #e0e0e0;
+}
+
+html.dark pre,
+html.dark code {
+  background: #0f0f0f;
+  color: #e6e6e6;
+  border: 1px solid #222;
+}
+
+html.dark table {
+  background: #141414;
+  color: #e6e6e6;
+  border-color: #2a2a2a;
+}
+
+html.dark th,
+html.dark td {
+  border-color: #2a2a2a;
+}
+
+html.dark hr {
+  border-color: #2a2a2a;
+}
+
+/* Try to override Pico variables when in dark mode for wider coverage */
+html.dark {
+  --pico-background: #121212;
+  --pico-foreground: #e6e6e6;
+  --pico-muted-color: #9e9e9e;
+  --pico-card-background-color: #1b1b1b;
+  --pico-muted-border-color: #2a2a2a;
+  --pico-primary: #90caf9;
+}
+
+/* Ensure the article header area also gets a dark background and readable text */
+html.dark #main-article > header {
+  background: #161616 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #262626 !important;
+}
+
+html.dark #main-article > header h1,
+html.dark #main-article > header p {
+  color: #ffffff !important;
+}
+
+/* If the header contains small or lead text, style that too */
+html.dark #main-article > header small,
+html.dark #main-article > header .lead {
+  color: #d0d0d0 !important;
+}
+```
+
+**What changed**: Added a button by Tasks and Health hyperlinks to switch from light to dark mode and vice versa
+
+**Why**: This imporves accessibility for people with sensitive eyes who may not know how to change browser settings
+
+**Impact**: Impoves UX as more people especially those with sensitive eyes can access the site.
+
+The theme is stored locally and will persist between running versions
 
 ---
 
