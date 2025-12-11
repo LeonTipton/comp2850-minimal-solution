@@ -379,6 +379,13 @@ html.dark button {
   border: 1px solid #2b6fa6 !important;
 }
 
+/* Ensure button-styled links (role="button") are readable in dark mode */
+html.dark a[role="button"] {
+  color: #fff !important;
+  background: #1976d2 !important;
+  border: 1px solid #2b6fa6 !important;
+}
+
 /* Ensure article/main content follows dark theme */
 html.dark main,
 html.dark .container,
