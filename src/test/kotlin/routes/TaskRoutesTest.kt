@@ -82,7 +82,7 @@ class TaskRoutesTest {
                 client.post("/tasks") {
                     header("HX-Request", "true")
                     header("Content-Type", "application/x-www-form-urlencoded")
-                    setBody("title=Test+task")
+                    setBody("title=Test+task&details=This+is+a+test+task")
                 }
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -101,7 +101,7 @@ class TaskRoutesTest {
             val response =
                 client.post("/tasks") {
                     header("Content-Type", "application/x-www-form-urlencoded")
-                    setBody("title=Test+task+nojs")
+                    setBody("title=Test+task+nojs&details=Testing+without+HTMX")
                 }
 
             // Should redirect to /tasks (POST-Redirect-GET pattern)
@@ -119,7 +119,7 @@ class TaskRoutesTest {
             client.post("/tasks") {
                 header("HX-Request", "true")
                 header("Content-Type", "application/x-www-form-urlencoded")
-                setBody("title=Toggle+test")
+                setBody("title=Toggle+test&details=Testing+task+completion+toggle")
             }
 
             // Then toggle it (implementation depends on actual route structure)
@@ -138,13 +138,13 @@ class TaskRoutesTest {
             client.post("/tasks") {
                 header("HX-Request", "true")
                 header("Content-Type", "application/x-www-form-urlencoded")
-                setBody("title=Meeting+with+team")
+                setBody("title=Meeting+with+team&details=Quarterly+review+discussion")
             }
 
             client.post("/tasks") {
                 header("HX-Request", "true")
                 header("Content-Type", "application/x-www-form-urlencoded")
-                setBody("title=Write+report")
+                setBody("title=Write+report&details=Monthly+performance+summary")
             }
 
             // Search for "meeting"
@@ -166,7 +166,7 @@ class TaskRoutesTest {
             repeat(15) { i ->
                 client.post("/tasks") {
                     header("Content-Type", "application/x-www-form-urlencoded")
-                    setBody("title=Task+$i")
+                    setBody("title=Task+$i&details=Task+number+$i+for+pagination+testing")
                 }
             }
 
@@ -187,7 +187,7 @@ class TaskRoutesTest {
                 client.post("/tasks") {
                     header("HX-Request", "true")
                     header("Content-Type", "application/x-www-form-urlencoded")
-                    setBody("title=ab") // Too short (< 3 characters)
+                    setBody("title=ab&details=Too+short+title") // Too short (< 3 characters)
                 }
 
             assertEquals(HttpStatusCode.OK, response.status)

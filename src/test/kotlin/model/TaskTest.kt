@@ -56,6 +56,7 @@ class TaskTest {
             Task(
                 id = "test-123",
                 title = "Task with \"quotes\"",
+                details = "Details with \"quotes\"",
                 completed = false,
             )
         val csv = task.toCSV()
@@ -68,6 +69,7 @@ class TaskTest {
             Task(
                 id = "test-456",
                 title = "Test task",
+                details = "",
                 completed = true,
             )
         val context = task.toPebbleContext()

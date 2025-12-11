@@ -274,6 +274,14 @@ select:focus {
 }
 
 /* ========================================
+   View Details
+   ======================================== */
+input[readonly] {
+  caret-color: transparent !important;
+  cursor: default !important;
+}
+
+/* ========================================
    Theme toggle and dark mode
    ======================================== */
 .theme-toggle-container {

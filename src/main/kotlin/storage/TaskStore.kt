@@ -20,8 +20,8 @@ import java.time.format.DateTimeParseException
  *
  * **CSV schema**:
  * ```
- * id,title,completed,created_at
- * 7a9f2c3d-...,\"Buy groceries\",false,2025-10-15T14:32:10
+ * id,title,details,completed,created_at
+ * 7a9f2c3d-...,\"Buy groceries\",\"Fresh salmon and vegetables\",false,2025-10-15T14:32:10
  * ```
  *
  * @property csvFile CSV file path (default: data/tasks.csv)
@@ -33,7 +33,7 @@ class TaskStore(
         private val CSV_FORMAT =
             CSVFormat.DEFAULT
                 .builder()
-                .setHeader("id", "title", "completed", "created_at")
+                .setHeader("id", "title", "details", "completed", "created_at")
                 .setSkipHeaderRecord(true)
                 .build()
 
@@ -51,7 +51,7 @@ class TaskStore(
         if (csvFile.length() == EMPTY_FILE_SIZE) {
             FileWriter(csvFile).use { writer ->
                 CSVPrinter(writer, CSV_FORMAT).use { printer ->
-                    printer.printRecord("id", "title", "completed", "created_at")
+                    printer.printRecord("id", "title", "details", "completed", "created_at")
                 }
             }
         }
@@ -72,8 +72,9 @@ class TaskStore(
                         Task(
                             id = record[0],
                             title = record[1],
-                            completed = record[2].toBoolean(),
-                            createdAt = LocalDateTime.parse(record[3], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                            details = record[2],
+                            completed = record[3].toBoolean(),
+                            createdAt = LocalDateTime.parse(record[4], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                         )
                     } catch (e: IndexOutOfBoundsException) {
                         // CSV row has missing fields - skip this row
@@ -122,6 +123,7 @@ class TaskStore(
                 printer.printRecord(
                     task.id,
                     task.title,
+                    task.details,
                     task.completed,
                     task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 )
@@ -206,11 +208,12 @@ class TaskStore(
     private fun writeAll(tasks: List<Task>) {
         FileWriter(csvFile, false).use { writer ->
             CSVPrinter(writer, CSV_FORMAT).use { printer ->
-                printer.printRecord("id", "title", "completed", "created_at")
+                printer.printRecord("id", "title", "details", "completed", "created_at")
                 tasks.forEach { task ->
                     printer.printRecord(
                         task.id,
                         task.title,
+                        task.details,
                         task.completed,
                         task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                     )
@@ -228,7 +231,7 @@ class TaskStore(
         csvFile.createNewFile()
         FileWriter(csvFile).use { writer ->
             CSVPrinter(writer, CSV_FORMAT).use { printer ->
-                printer.printRecord("id", "title", "completed", "created_at")
+                printer.printRecord("id", "title", "details", "completed", "created_at")
             }
         }
     }

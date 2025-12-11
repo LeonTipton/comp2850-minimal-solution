@@ -1,0 +1,40 @@
+<li id="task-{{ task.id }}" class="task-details">
+  <form
+    action="/tasks/{{ task.id }}/details"
+    method="get"
+    hx-post="/tasks/{{ task.id }}/details"
+    hx-target="#task-{{ task.id }}"
+    hx-swap="outerHTML"
+  >
+    <label for="title-{{ task.id }}">Title</label>
+    <input
+      type="text"
+      id="title-{{ task.id }}"
+      name="title"
+      value="{{ task.title }}"
+      readonly
+      required
+      autofocus
+      aria-describedby="hint-{{ task.id }}"
+    />
+
+    <label for="details-{{ task.id }}">Details</label>
+    <input
+      type="text"
+      id="details-{{ task.id }}"
+      name="details"
+      value="{{ task.details }}"
+      readonly
+      aria-describedby="hint-{{ task.id }}"
+    />
+
+    <a
+      href="/tasks"
+      hx-get="/tasks/{{ task.id }}/view"
+      hx-target="#task-{{ task.id }}"
+      hx-swap="outerHTML"
+      role="button"
+      >Close</a
+    >
+  </form>
+</li>

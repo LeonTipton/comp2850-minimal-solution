@@ -42,6 +42,7 @@ fun Routing.configureTaskRoutes(store: TaskStore = TaskStore()) {
     delete("/tasks/{id}") { call.handleDeleteTask(store) }  // HTMX path (RESTful)
     post("/tasks/{id}/delete") { call.handleDeleteTask(store) }  // No-JS fallback
     get("/tasks/search") { call.handleSearchTasks(store) }
+    get("/tasks/{id}/details") { call.handleViewDetails(store) }
 }
 
 /**
@@ -82,11 +83,12 @@ private suspend fun ApplicationCall.handleCreateTask(store: TaskStore) {
     timed("T3_add", jsMode()) {
         val params = receiveParameters()
         val title = params["title"]?.trim() ?: ""
+        val details = params["details"]?.trim() ?: ""
         val query = params["q"].toQuery()
 
         when (val validation = Task.validate(title)) {
-            is ValidationResult.Error -> handleCreateTaskError(store, title, query, validation)
-            ValidationResult.Success -> handleCreateTaskSuccess(store, title, query)
+            is ValidationResult.Error -> handleCreateTaskError(store, title, details, query, validation)
+            ValidationResult.Success -> handleCreateTaskSuccess(store, title, details, query)
         }
     }
 }
@@ -94,6 +96,7 @@ private suspend fun ApplicationCall.handleCreateTask(store: TaskStore) {
 private suspend fun ApplicationCall.handleCreateTaskError(
     store: TaskStore,
     title: String,
+    details: String,
     query: String,
     validation: ValidationResult.Error,
 ) {
@@ -118,11 +121,12 @@ private suspend fun ApplicationCall.handleCreateTaskError(
 private suspend fun ApplicationCall.handleCreateTaskSuccess(
     store: TaskStore,
     title: String,
+    details: String,
     query: String,
 ) {
-    val task = Task(title = title)
+    val task = Task(title = title, details=details)
     store.add(task)
-
+    
     if (isHtmxRequest()) {
         val paginated = paginateTasks(store, query, 1)
         val statusHtml =
@@ -226,6 +230,26 @@ private suspend fun ApplicationCall.handleSearchTasks(store: TaskStore) {
     }
 }
 
+private suspend fun ApplicationCall.handleViewDetails(store: TaskStore) {
+    val id = parameters["id"] ?: run {
+        respond(HttpStatusCode.BadRequest)
+        return
+    }
+
+    val task = store.getById(id)
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return
+    }
+
+    if (isHtmxRequest()) {
+        val html = renderTemplate("tasks/_details.peb", mapOf("task" to task.toPebbleContext()))
+        respondText(html, ContentType.Text.Html)
+    } else {
+        respondRedirect("/tasks")
+    }
+}
+
 private fun paginateTasks(
     store: TaskStore,
     query: String,
@@ -290,8 +314,8 @@ private fun messageStatusFragment(
     isError: Boolean = false,
 ): String {
     val role = if (isError) "alert" else "status"
-    val ariaLive = if (isError) """ aria-live="assertive"""" else """ aria-live="polite""""
-    val cssClass = if (isError) """ class="error"""" else ""
+    val ariaLive = if (isError) " aria-live=\"assertive\"" else " aria-live=\"polite\""
+    val cssClass = if (isError) " class=\"error\"" else ""
     return """<div id="status" hx-swap-oob="true" role="$role"$ariaLive$cssClass>$message</div>"""
 }
 
@@ -335,7 +359,10 @@ private suspend fun ApplicationCall.handleUpdateTask(store: TaskStore) {
         return
     }
 
-    val newTitle = receiveParameters()["title"]?.trim() ?: ""
+    // Read form parameters once (body is consumable only once)
+    val params = receiveParameters()
+    val newTitle = params["title"]?.trim() ?: ""
+    val newDetails = params["details"]?.trim() ?: ""
     val validation = Task.validate(newTitle)
 
     if (validation is ValidationResult.Error) {
@@ -353,8 +380,8 @@ private suspend fun ApplicationCall.handleUpdateTask(store: TaskStore) {
         return
     }
 
-    // Update task
-    val updated = task.copy(title = newTitle)
+    // Update task (title and details)
+    val updated = task.copy(title = newTitle, details = newDetails)
     store.update(updated)
 
     if (isHtmxRequest()) {

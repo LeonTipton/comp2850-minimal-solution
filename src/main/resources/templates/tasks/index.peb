@@ -55,7 +55,13 @@ endblock %} {% block content %}
         %}Title is required. Please enter at least one character.{% endif %}
       </p>
       {% endif %}
-
+      <label for="task-details">Details</label>
+      <input
+        type="text"
+        id="task-details"
+        name="details"
+        placeholder="Optional"
+      />
       <button type="submit">Add Task</button>
     </form>
   </section>
