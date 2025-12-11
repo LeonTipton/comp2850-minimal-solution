@@ -1,6 +1,6 @@
 {% extends "_layout/base.peb" %} {% block title %}Task List | COMP2850{%
 endblock %} {% block content %}
-<article>
+<article id="main-article">
   <header>
     <h1>Task Manager</h1>
     <p>
