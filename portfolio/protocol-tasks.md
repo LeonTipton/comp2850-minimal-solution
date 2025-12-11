@@ -168,7 +168,9 @@ No prior implementation
 [body.peb](../src/main/resources/templates/_layout/base.peb):
 
 ```html
+...
 <script src="/static/js/theme-toggle.js"></script>
+...
 ```
 
 [\_nav.peb](../src/main/resources/templates/_layout/_nav.peb):
@@ -190,7 +192,8 @@ No prior implementation
 [index.peb](../src/main/resources/templates/tasks/index.peb):
 
 ```html
-<article id="main-article"></article>
+<article id="main-article">
+  ...
 ```
 
 [theme-toggle.js](../src/main/resources/static/js/theme-toggle.js):
