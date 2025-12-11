@@ -471,9 +471,24 @@ mapOf(
 )
 ```
 
-[TaskRoutes.kt (82-91; 123; 293-294; 338; 357)](../src/main/kotlin/routes/TaskRoutes.kt):
+[TaskRoutes.kt (33-45; 82-91; 123; 293-294; 338; 357)](../src/main/kotlin/routes/TaskRoutes.kt):
 
 ```kotlin
+// 33-45
+fun Routing.configureTaskRoutes(store: TaskStore = TaskStore()) {
+    get("/tasks") { call.handleTaskList(store) }
+    get("/") { call.respondRedirect("/tasks") }
+    get("/tasks/fragment") { call.handleTaskFragment(store) }
+    post("/tasks") { call.handleCreateTask(store) }
+    get("/tasks/{id}/edit") { call.handleEditTask(store) }
+    post("/tasks/{id}/edit") { call.handleUpdateTask(store) }
+    get("/tasks/{id}/view") { call.handleViewTask(store) }
+    post("/tasks/{id}/toggle") { call.handleToggleTask(store) }
+    delete("/tasks/{id}") { call.handleDeleteTask(store) }  // HTMX path (RESTful)
+    post("/tasks/{id}/delete") { call.handleDeleteTask(store) }  // No-JS fallback
+    get("/tasks/search") { call.handleSearchTasks(store) }
+}
+
 // 82-91
 timed("T3_add", jsMode()) {
     val params = receiveParameters()
@@ -502,7 +517,7 @@ val newTitle = receiveParameters()["title"]?.trim() ?: ""
 val updated = task.copy(title = newTitle)
 ```
 
-[TaskStore.kt (36; 54; 75-76; 209; 231)](../src/main/kotlin/storage/TaskStore.kt):
+[TaskStore.kt (36; 54; 75-76; 121-128; 209; 231)](../src/main/kotlin/storage/TaskStore.kt):
 
 ```kotlin
 // 36
@@ -514,6 +529,16 @@ printer.printRecord("id", "title", "completed", "created_at")
 // 75-76
 completed = record[2].toBoolean(),
 createdAt = LocalDateTime.parse(record[3], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+
+// 121-128
+CSVPrinter(writer, CSV_FORMAT).use { printer ->
+    printer.printRecord(
+        task.id,
+        task.title,
+        task.completed,
+        task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+    )
+}
 
 // 209
 printer.printRecord("id", "title", "completed", "created_at")
