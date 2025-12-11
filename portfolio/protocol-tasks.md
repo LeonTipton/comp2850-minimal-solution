@@ -120,8 +120,8 @@ Could not get a working implementation of the program - using given minimal vers
 **Top 3 priorities for redesign**:
 
 1.  SR speaks but no subtitles
-2.  Updating task counter
-3.  No method for theme change
+2.  No method for theme change
+3.  Add details input
 
 **How to complete this table** (decision tree):
 
