@@ -426,9 +426,15 @@ The theme is stored locally and will persist between running versions
 
 **Before**:
 
-[TaskRepository.kt (28-37; 46-47; 75)](../src/main/kotlin/data/TaskRepository.kt):
+[TaskRepository.kt (12-15; 28-37; 46-47; 75)](../src/main/kotlin/data/TaskRepository.kt):
 
 ```kotlin
+// 12-15
+data class Task(
+    val id: Int,
+    var title: String,
+)
+
 // 28-37
 init {
     file.parentFile?.mkdirs()
@@ -507,8 +513,8 @@ val task = Task(title = title)
 // missing implementation of function
 
 // 293-294: the combination of """ """ and "" broke formatter
-// val ariaLive = if (isError) """ aria-live="assertive"""" else """ aria-live="polite""""
-// val cssClass = if (isError) """ class="error"""" else ""
+val ariaLive = if (isError) """ aria-live="assertive"""" else """ aria-live="polite""""
+val cssClass = if (isError) """ class="error"""" else ""
 
 // 338
 val newTitle = receiveParameters()["title"]?.trim() ?: ""
