@@ -189,19 +189,279 @@ Could not get a working implementation of the program - using given minimal vers
 
 **After**:
 
+[TaskRepository.kt (12-15; 28-37; 46-47; 75)](../src/main/kotlin/data/TaskRepository.kt):
+
 ```kotlin
-[Fixed code]
+// 12-15
+data class Task(
+    val id: Int,
+    var title: String,
+    var details: String,
+)
+
+// 28-37
+init {
+    file.parentFile?.mkdirs()
+    if (!file.exists()) {
+        file.writeText("id,title,details\n")
+    } else {
+        file.readLines().drop(1).forEach { line ->
+            val parts = line.split(",", limit = 3)
+            if (parts.size == 3) {
+                val id = parts[0].toIntOrNull() ?: return@forEach
+                tasks.add(Task(id, parts[1], parts[2]))
+                idCounter.set(maxOf(idCounter.get(), id + 1))
+            }
+        }
+    }
+}
+
+// 46-47
+fun add(title: String, details: String = ""): Task {
+    val task = Task(idCounter.getAndIncrement(), title, details)
+    ...
+
+// 75
+file.writeText("id,title,details\n" + tasks.joinToString("\n") { "${it.id},${it.title},${it.details}" })
 ```
 
-**What changed**:
+[Task.kt (19-24; 83; 101-107)](../src/main/kotlin/model/Task.kt):
 
-**Why**:
+```kotlin
+// 19-24
+data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val details: String,
+    val completed: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+) {...}
 
-**Impact**:
+// 83
+val escapedDetails = details.replace("\"", "\"\"")
+return "$id,\"$escapedTitle\",\"$escapedDetails\",$completed,${createdAt.format(formatter)}"
 
----
+// 101-107
+mapOf(
+    "id" to id,
+    "title" to title,
+    "details" to details,
+    "completed" to completed,
+    "createdAt" to createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+    "createdAtISO" to createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+)
+```
 
-\[Add Fix 3 if applicable\]
+[TaskRoutes.kt (33-45; 82-91; 123; 293-294; 338; 357)](../src/main/kotlin/routes/TaskRoutes.kt):
+
+```kotlin
+// 33-45
+fun Routing.configureTaskRoutes(store: TaskStore = TaskStore()) {
+    get("/tasks") { call.handleTaskList(store) }
+    get("/") { call.respondRedirect("/tasks") }
+    get("/tasks/fragment") { call.handleTaskFragment(store) }
+    post("/tasks") { call.handleCreateTask(store) }
+    get("/tasks/{id}/edit") { call.handleEditTask(store) }
+    post("/tasks/{id}/edit") { call.handleUpdateTask(store) }
+    get("/tasks/{id}/view") { call.handleViewTask(store) }
+    post("/tasks/{id}/toggle") { call.handleToggleTask(store) }
+    delete("/tasks/{id}") { call.handleDeleteTask(store) }  // HTMX path (RESTful)
+    post("/tasks/{id}/delete") { call.handleDeleteTask(store) }  // No-JS fallback
+    get("/tasks/search") { call.handleSearchTasks(store) }
+    get("/tasks/{id}/details") { call.handleViewDetails(store) }
+}
+
+// 82-91
+timed("T3_add", jsMode()) {
+    val params = receiveParameters()
+    val title = params["title"]?.trim() ?: ""
+    val details = params["details"]?.trim() ?: ""
+    val query = params["q"].toQuery()
+
+    when (val validation = Task.validate(title)) {
+        is ValidationResult.Error -> handleCreateTaskError(store, title, details, query, validation)
+        ValidationResult.Success -> handleCreateTaskSuccess(store, title, details, query)
+    }
+}
+
+// 123
+val task = Task(title = title, details=details)
+
+// additional function
+private suspend fun ApplicationCall.handleViewDetails(store: TaskStore) {
+    val id = parameters["id"] ?: run {
+        respond(HttpStatusCode.BadRequest)
+        return
+    }
+
+    val task = store.getById(id)
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return
+    }
+
+    if (isHtmxRequest()) {
+        val html = renderTemplate("tasks/_details.peb", mapOf("task" to task.toPebbleContext()))
+        respondText(html, ContentType.Text.Html)
+    } else {
+        respondRedirect("/tasks")
+    }
+}
+
+// 293-294
+val ariaLive = if (isError) " aria-live=\"assertive\"" else " aria-live=\"polite\""
+val cssClass = if (isError) " class=\"error\"" else ""
+
+// 338
+val params = receiveParameters()
+val newTitle = params["title"]?.trim() ?: ""
+val newDetails = params["details"]?.trim() ?: ""
+
+// 357
+val updated = task.copy(title = newTitle, details = newDetails)
+```
+
+[TaskStore.kt (36; 54; 75-76; 121-128; 209; 231)](../src/main/kotlin/storage/TaskStore.kt):
+
+```kotlin
+// 36
+.setHeader("id", "title", "details", "completed", "created_at")
+
+// 54
+printer.printRecord("id", "title", "details", "completed", "created_at")
+
+// 75-76
+details = record[2],
+completed = record[3].toBoolean(),
+createdAt = LocalDateTime.parse(record[4], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+
+// 121-128
+CSVPrinter(writer, CSV_FORMAT).use { printer ->
+    printer.printRecord(
+        task.id,
+        task.title,
+        task.details,
+        task.completed,
+        task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+    )
+}
+
+// 209
+printer.printRecord("id", "title", "deatils", "completed", "created_at")
+
+// 231
+printer.printRecord("id", "title", "deatils", "completed", "created_at")
+```
+
+[custom.css](../src/main/resources/static/css/custom.css):
+
+```css
+/* ========================================
+   View Details
+   ======================================== */
+input[readonly] {
+  caret-color: transparent !important;
+  cursor: default !important;
+}
+```
+
+[\_details.peb](../src/main/resources/templates/tasks/_details.peb):
+
+```html
+<li id="task-{{ task.id }}" class="task-details">
+  <form
+    action="/tasks/{{ task.id }}/details"
+    method="get"
+    hx-post="/tasks/{{ task.id }}/details"
+    hx-target="#task-{{ task.id }}"
+    hx-swap="outerHTML"
+  >
+    <label for="title-{{ task.id }}">Title</label>
+    <input
+      type="text"
+      id="title-{{ task.id }}"
+      name="title"
+      value="{{ task.title }}"
+      readonly
+      required
+      autofocus
+      aria-describedby="hint-{{ task.id }}"
+    />
+
+    <label for="details-{{ task.id }}">Details</label>
+    <input
+      type="text"
+      id="details-{{ task.id }}"
+      name="details"
+      value="{{ task.details }}"
+      readonly
+      aria-describedby="hint-{{ task.id }}"
+    />
+
+    <a
+      href="/tasks"
+      hx-get="/tasks/{{ task.id }}/view"
+      hx-target="#task-{{ task.id }}"
+      hx-swap="outerHTML"
+      role="button"
+      >Close</a
+    >
+  </form>
+</li>
+```
+
+[\_edit.peb](../src/main/resources/templates/tasks/_edit.peb):
+
+```html
+<label for="details-{{ task.id }}">Details</label>
+<input
+  type="text"
+  id="details-{{ task.id }}"
+  name="details"
+  value="{{ task.details }}"
+  aria-describedby="hint-{{ task.id }}"
+/>
+```
+
+[\_item.peb](../src/main/resources/templates/tasks/_item.peb):
+
+```html
+<form
+  action="/tasks/{{ task.id }}/details"
+  method="get"
+  style="display: inline"
+  hx-get="/tasks/{{ task.id }}/details"
+  hx-target="#task-{{ task.id }}"
+  hx-swap="outerHTML"
+>
+  <button type="submit" aria-label="View details: {{ task.details }}">
+    View Details
+  </button>
+</form>
+```
+
+[index.peb](../src/main/resources/templates/tasks/index.peb):
+
+```html
+    ...
+    {% endif %}
+        <label for="task-details">Details</label>
+        <input
+        type="text"
+        id="task-details"
+        name="details"
+        placeholder="Optional"
+        />
+        <button type="submit">Add Task</button>
+    </form>
+</section>
+```
+
+**What changed**: Added an input under the title for extra details and a button to view them. Modified edit button to be able to change details aswell as title
+
+**Why**: It is a very simple change that massively improves the functionality of the task manager, SR still works to explain details.
+
+**Impact**: Improved functionality of the app with no loss of accessibility
 
 ---
 
