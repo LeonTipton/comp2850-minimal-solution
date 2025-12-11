@@ -192,8 +192,7 @@ No prior implementation
 [index.peb](../src/main/resources/templates/tasks/index.peb):
 
 ```html
-<article id="main-article">
-  ...
+<article id="main-article">...</article>
 ```
 
 [theme-toggle.js](../src/main/resources/static/js/theme-toggle.js):
@@ -428,7 +427,7 @@ html.dark #main-article > header .lead {
 
 **Why**: This imporves accessibility for people with sensitive eyes who may not know how to change browser settings
 
-**Impact**: Impoves UX as more people especially those with sensitive eyes can access the site.
+**Impact**: Impoves UX as more people especially those with sensitive eyes can access the site. (1.4.3 improvement)
 
 The theme is stored locally and will persist between running versions
 
@@ -867,71 +866,36 @@ input[readonly] {
 
 **Instructions**: Test all 20 criteria. Mark pass/fail/n/a + add notes.
 
-::: table-wrapper
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| Check | Criterion | Level | Result | Notes |
-+==================+=======================================+=============+===================+================================================================+
-| **Keyboard (5)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| K1 | 2.1.1 All actions keyboard accessible | A | \[pass/fail\] | \[e.g., "Tested Tab/Enter on all buttons"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| K2 | 2.4.7 Focus visible | AA | \[pass/fail\] | \[e.g., "2px blue outline on all interactive elements"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| K3 | No keyboard traps | A | \[pass/fail\] | \[e.g., "Can Tab through filter, edit, delete without traps"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| K4 | Logical tab order | A | \[pass/fail\] | \[e.g., "Top to bottom, left to right"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| K5 | Skip links present | AA | \[pass/fail/n/a\] | \[e.g., "Skip to main content works"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| **Forms (3)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| F1 | 3.3.2 Labels present | A | \[pass/fail\] | \[e.g., "All inputs have or aria-label"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| F2 | 3.3.1 Errors identified | A | \[pass/fail\] | \[e.g., "Errors have role=alert (FIXED in Fix #1)"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| F3 | 4.1.2 Name/role/value | A | \[pass/fail\] | \[e.g., "All form controls have accessible names"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| **Dynamic (3)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| D1 | 4.1.3 Status messages | AA | \[pass/fail\] | \[e.g., "Status div has role=status"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| D2 | Live regions work | AA | \[pass/fail\] | \[e.g., "Tested with NVDA, announces 'Task added'"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| D3 | Focus management | A | \[pass/fail\] | \[e.g., "Focus moves to error summary after submit"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| **No-JS (3)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| N1 | Full feature parity | --- | \[pass/fail\] | \[e.g., "All CRUD ops work without JS"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| N2 | POST-Redirect-GET | --- | \[pass/fail\] | \[e.g., "No double-submit on refresh"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| N3 | Errors visible | A | \[pass/fail\] | \[e.g., "Error summary shown in no-JS mode"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| **Visual (3)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| V1 | 1.4.3 Contrast minimum | AA | \[pass/fail\] | \[e.g., "All text 7.1:1 (AAA) via CCA"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| V2 | 1.4.4 Resize text | AA | \[pass/fail\] | \[e.g., "200% zoom, no content loss"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| V3 | 1.4.11 Non-text contrast | AA | \[pass/fail\] | \[e.g., "Focus indicator 4.5:1"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| **Semantic (3)** | | | | |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| S1 | 1.3.1 Headings hierarchy | A | \[pass/fail\] | \[e.g., "h1 → h2 → h3, no skips"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| S2 | 2.4.1 Bypass blocks | A | \[pass/fail\] | \[e.g., " |
-| | | | | |
-| | | | | ::: {role="main"} |
-| | | | | landmark, |
-| | | | | |
-| | | | | for filter"\] |
-| | | | | ::: |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-| S3 | 1.1.1 Alt text | A | \[pass/fail\] | \[e.g., "No images in interface OR all have alt"\] |
-+------------------+---------------------------------------+-------------+-------------------+----------------------------------------------------------------+
-:::
+| Check            | Criterion                             | Level | Result        | Notes                                                                                                       |
+| ---------------- | ------------------------------------- | ----- | ------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Keyboard (5)** |                                       |       |               |                                                                                                             |
+| K1               | 2.1.1 All actions keyboard accessible | A     | Pass          | Navigated around entire page with tabs/tried inputs with enter only                                         |
+| K2               | 2.4.7 Focus visible                   | AA    | Pass          | Witnessed from K1 testing                                                                                   |
+| K3               | No keyboard traps                     | A     | Pass          | Can tab through all elements without issue                                                                  |
+| K4               | Logical tab order                     | A     | Pass          | Tabs always travels along a row before going down the the next one                                          |
+| K5               | Skip links present                    | AA    | Fail          | Skip link jumps to highlight the border of the form & requires a second to enter the first input box        |
+| **Forms (3)**    |                                       |       |               |                                                                                                             |
+| F1               | 3.3.2 Labels present                  | A     | Pass          | All inputs are described by aria in some way                                                                |
+| F2               | 3.3.1 Errors identified               | A     | Pass          | Error messages all have role="alert"                                                                        |
+| F3               | 4.1.2 Name/role/value                 | A     | Pass          | ALl form controls have appropriate simple names                                                             |
+| **Dynamic (3)**  |                                       |       |               |                                                                                                             |
+| D1               | 4.1.3 Status messages                 | AA    | Pass          | Status div has role=status                                                                                  |
+| D2               | Live regions work                     | AA    | \[pass/fail\] | \[e.g., "Tested with NVDA, announces 'Task added'"\]                                                        |
+| D3               | Focus management                      | A     | \[pass/fail\] | \[e.g., "Focus moves to error summary after submit"\]                                                       |
+| **No-JS (3)**    |                                       |       |               |                                                                                                             |
+| N1               | Full feature parity                   | ---   | Fail          | Most CRUD operations work without js - Update does not                                                      |
+| N2               | POST-Redirect-GET                     | ---   | Pass          | Only one submission on no-JS                                                                                |
+| N3               | Errors visible                        | A     | Fail          | Error summary is not shown in no-JS mode                                                                    |
+| **Visual (3)**   |                                       |       |               |                                                                                                             |
+| V1               | 1.4.3 Contrast minimum                | AA    | \[pass/fail]  | \[e.g., "All text 7.1:1 (AAA) via CCA"\]                                                                    |
+| V2               | 1.4.4 Resize text                     | AA    | Pass          | No content lost on zoom                                                                                     |
+| V3               | 1.4.11 Non-text contrast              | AA    | \[pass/fail\] | \[e.g., "Focus indicator 4.5:1"\]                                                                           |
+| **Semantic (3)** |                                       |       |               |                                                                                                             |
+| S1               | 1.3.1 Headings hierarchy              | A     | Pass          | h1 -> h2 -> p, small under appropriate inputs with no mixed ordering                                        |
+| S2               | 2.4.1 Bypass blocks                   | A     | Pass          | Can always skip past optional navigation/theme links using skip to main content (works with and without js) |
+| S3               | 1.1.1 Alt text                        | A     | Pass          | No images used in interface                                                                                 |
 
-**Summary**: \[X/20 pass\], \[Y/20 fail\] **Critical failures** (if any): \[List any Level A fails\]
+**Summary**: /20 pass, /20 fail **Critical failures** (if any): N3
 
 ---
 
@@ -950,12 +914,20 @@ Median time \[Task X\] \[e.g., 1400ms\] \[e.g., 1150ms\] \[e.g., -250ms\] \[✅/
 WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
 :::
 
+---
+
 **Re-pilot details**:
 
-- **P5** (post-fix): \[Variant - e.g., "Screen reader user, NVDA + keyboard"\] - \[Date piloted\]
-- **P6** (if applicable): \[Variant\] - \[Date\]
+- **P3** (post-fix): keyboard preference, with js
+  -- Consent script (above) read & consented to 11/12/2025
 
-**Limitations / Honest reporting**: \[If metrics didn't improve or only modestly: explain why. Small sample size? Wrong fix? Needs more iteration? Be honest - valued over perfect results.\]
+**Limitations / Honest reporting**:
+
+> - Not a massive improvement
+>
+> - Theme change is useful for use in sunlight
+>
+> - Site works as expected
 
 ---
 
@@ -965,16 +937,19 @@ WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
 
 ### [Screenshots](#screenshots){.header}
 
-::: table-wrapper
-Filename What it shows Context/Link to finding
-
----
-
-before-sr-error.png Error message without role="alert" Finding #1 - SR errors not announced
-after-sr-error.png Error message WITH role="alert" added Fix #1 verification
-regression-axe-report.png axe DevTools showing 0 violations Verification Part A
-\[your-screenshot-3.png\] \[Description\] \[Which finding/fix this supports\]
-:::
+| Evidence                                    | Context                                                   | Finding Improvement                                     |
+| ------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| [T1](./evidence/T1_evidence.png)            | P1 evidence screenshots for Task1                         | N/A                                                     |
+| [T2](./evidence/T2_evidence.png)            | P1 evidence screenshots for Task2                         | N/A                                                     |
+| [T3](./evidence/T3_evidence.png)            | P1 evidence screenshots for Task3                         | N/A                                                     |
+| [T4](./evidence/T4_evidence.png)            | P1 evidence screenshots for Task4                         | N/A                                                     |
+| [T5](./evidence/T5_evidence.png)            | P1 evidence screenshots for Task5                         | N/A                                                     |
+| [T6](./evidence/T6_evidence.png)            | P1 evidence screenshots for Task6                         | N/A                                                     |
+| [T7](./evidence/T7_evidence.png)            | P1 evidence screenshots for Task7                         | N/A                                                     |
+| [P-dark](./evidence/P-dark.png)             | P3: the new dark theme with button changed to say "Light" | Improvement 2 - 1.4.3 improvement                       |
+| [P-light](./evidence/P-light.png)           | P3: the light theme with button saying "Dark"             | Improvement 2 - 1.4.3 improvement                       |
+| [P-details](./evidence/P-details.png)       | P3: shows the new view to see task details                | Shows the requested details view                        |
+| [P-task_added](./evidence/P-task_added.png) | P3 colour contrast for the CRUD method complete popup     | Shows that WCAG 2.2 is not violated regardless of theme |
 
 **PII check**:
 
@@ -988,17 +963,17 @@ regression-axe-report.png axe DevTools showing 0 violations Verification Part A
 
 **Instructions**: Attach pilot notes as separate files (P1-notes.md, P2-notes.md, etc.). Summarize key observations here.
 
-**P1** (\[ Variant - e.g., "Standard mouse + HTMX"\]):
+**P1** (Standard mouse + HTMX):
 
-- **Key observation 1**: \[Quote + timestamp - e.g., "Struggled with filter button (09:47)"\]
-- **Key observation 2**: \[Quote + timestamp\]
+- [P1-notes.md](./evidence/P1-notes.md)
+- **Key observation 1**: "No issues with functionality"
+- **Key observation 2**: "Would like to be able to add more detail to each task"
 
-**P2** (\[Variant\]):
+**P2** (Keyboard only + js-off):
 
-- **Key observation 1**: \[Quote + timestamp\]
-- **Key observation 2**: \[Quote + timestamp\]
-
-\[Repeat for P3, P4 if applicable\]
+- [P2-notes.md](./evidence/P2-notes.md)
+- **Key observation 1**: "Requires lots of tabbing to add multiple tasks consecutively"
+- **Key observation 2**: "Disliked the light mode contrast"
 
 ---
 
