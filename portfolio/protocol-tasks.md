@@ -165,11 +165,15 @@ No prior implementation
 
 **After**:
 
-```html
-<!-- body.peb -->
-<script src="/static/js/theme-toggle.js"></script>
+[body.peb](../src/main/resources/templates/_layout/base.peb):
 
-<!-- _nav.peb -->
+```html
+<script src="/static/js/theme-toggle.js"></script>
+```
+
+[\_nav.peb](../src/main/resources/templates/_layout/_nav.peb):
+
+```html
 <li>
   <button
     id="theme-toggle"
@@ -181,10 +185,15 @@ No prior implementation
     Dark
   </button>
 </li>
+```
 
-<!-- index.peb -->
+[index.peb](../src/main/resources/templates/tasks/index.peb):
+
+```html
 <article id="main-article"></article>
 ```
+
+[theme-toggle.js](../src/main/resources/static/js/theme-toggle.js):
 
 ```js
 (function () {
@@ -225,6 +234,8 @@ No prior implementation
   });
 })();
 ```
+
+[custom.css](../src/main/resources/static/css/custom.css):
 
 ```css
 /* ========================================
