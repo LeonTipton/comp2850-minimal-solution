@@ -151,39 +151,17 @@ Could not get a working implementation of the program - using given minimal vers
 
 **Instructions**: Show before/after code for 1-3 fixes. Link each to findings table.
 
-### [Fix 1: \[Fix Name\]](#fix-1-fix-name){.header}
-
-**Addresses finding**: \[Finding #X from table above\]
-
-**Before** (\[file path:line number\]):
-
-```kotlin
-// ❌ Problem code
-[Paste your original code here]
-```
-
-**After** (\[file path:line number\]):
-
-```kotlin
-// ✅ Fixed code
-[Paste your improved code here]
-```
-
-**What changed**: \[1 sentence - what you added/removed/modified\]
-
-**Why**: \[1 sentence - which WCAG criterion or usability issue this fixes\]
-
-**Impact**: \[1-2 sentences - how this improves UX, who benefits\]
-
 ---
 
-### [Fix 2: Updaing page to include a mode switching button](#fix-2-fix-name){.header}
+### [Fix 1: Updaing page to include a mode switching button](#fix-1-fix-name){.header}
 
 **Addresses finding**: 2 (No method implemented to swap colour schemes)
 
 **Before**:
 
 No prior implementation
+
+---
 
 **After**:
 
@@ -442,7 +420,138 @@ The theme is stored locally and will persist between running versions
 
 ---
 
-\[Add Fix 3 if applicable\]
+### [Fix 2: Adding details](#fix-2-fix-name){.header}
+
+**Addresses finding**: No way of adding details to each task
+
+**Before**:
+
+[TaskRepository.kt (28-37; 46-47; 75)](../src/main/kotlin/data/TaskRepository.kt):
+
+```kotlin
+// 28-37
+init {
+    file.parentFile?.mkdirs()
+    if (!file.exists()) {
+        file.writeText("id,title\n")
+    } else {
+        file.readLines().drop(1).forEach { line ->
+            val parts = line.split(",", limit = 2)
+            if (parts.size == 2) {
+                val id = parts[0].toIntOrNull() ?: return@forEach
+                tasks.add(Task(id, parts[1]))
+                idCounter.set(maxOf(idCounter.get(), id + 1))
+            }
+        }
+    }
+}
+
+// 46-47
+fun add(title: String): Task {
+    val task = Task(idCounter.getAndIncrement(), title)
+    ...
+
+// 75
+file.writeText("id,title\n" + tasks.joinToString("\n") { "${it.id},${it.title}" })
+```
+
+[Task.kt (83; 101-107)](../src/main/kotlin/model/Task.kt):
+
+```kotlin
+// 83
+return "$id,\"$escapedTitle\",$completed,${createdAt.format(formatter)}"
+
+// 101-107
+mapOf(
+    "id" to id,
+    "title" to title,
+    "completed" to completed,
+    "createdAt" to createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+    "createdAtISO" to createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+)
+```
+
+[TaskRoutes.kt (82-91; 123; 293-294; 338; 357)](../src/main/kotlin/routes/TaskRoutes.kt):
+
+```kotlin
+// 82-91
+timed("T3_add", jsMode()) {
+    val params = receiveParameters()
+    val title = params["title"]?.trim() ?: ""
+    val query = params["q"].toQuery()
+
+    when (val validation = Task.validate(title)) {
+        is ValidationResult.Error -> handleCreateTaskError(store, title, query, validation)
+        ValidationResult.Success -> handleCreateTaskSuccess(store, title, query)
+    }
+}
+
+// 123
+val task = Task(title = title)
+
+// missing implementation of function
+
+// 293-294: the combination of """ """ and "" broke formatter
+// val ariaLive = if (isError) """ aria-live="assertive"""" else """ aria-live="polite""""
+// val cssClass = if (isError) """ class="error"""" else ""
+
+// 338
+val newTitle = receiveParameters()["title"]?.trim() ?: ""
+
+// 357
+val updated = task.copy(title = newTitle)
+```
+
+[TaskStore.kt (36; 54; 75-76; 209; 231)](../src/main/kotlin/storage/TaskStore.kt):
+
+```kotlin
+// 36
+.setHeader("id", "title", "completed", "created_at")
+
+// 54
+printer.printRecord("id", "title", "completed", "created_at")
+
+// 75-76
+completed = record[2].toBoolean(),
+createdAt = LocalDateTime.parse(record[3], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+
+// 209
+printer.printRecord("id", "title", "completed", "created_at")
+
+// 231
+printer.printRecord("id", "title", "completed", "created_at")
+```
+
+[custom.css](../src/main/resources/static/css/custom.css):
+
+missing implementation
+
+\_details.peb - missing file
+
+[\_edit.peb](../src/main/resources/templates/tasks/_edit.peb):
+
+missing implementaion
+
+[\_item.peb](../src/main/resources/templates/tasks/_item.peb):
+
+missing implementation
+
+---
+
+**After** (\[file path:line number\]):
+
+Altered test csv
+
+```kotlin
+// ✅ Fixed code
+[Paste your improved code here]
+```
+
+**What changed**: \[1 sentence - what you added/removed/modified\]
+
+**Why**: \[1 sentence - which WCAG criterion or usability issue this fixes\]
+
+**Impact**: \[1-2 sentences - how this improves UX, who benefits\]
 
 ---
 
