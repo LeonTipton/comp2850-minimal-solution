@@ -9,15 +9,14 @@
 - I confirm all participants gave informed consent
 - I confirm this work is my own (AI tools used for code assistance are cited below)
 
-**AI tools used** (if any): Used AI to help build the Light/Dark mode button as this is a quite a difficult implement.
-
+**AI tools used** (if any): Used AI to help build the Light/Dark mode button as this is a quite a difficult implement - mainly for css colouring to adhere to 1.4.3 and the js to improve functionality (Change the writing on the button as mode changes)
 Could not get a working implementation of the program - using given minimal version
 
 ---
 
-## [1. Protocol & Tasks](../../comp2850-hci-starter/wk06/research/consent-protocol.md){.header} {#1-protocol--tasks}
+## [1. Protocol & Tasks](./evidence/consent-protocol.md){.header} {#1-protocol--tasks}
 
-### [Link to Needs-Finding (LO2)](../../comp2850-hci-starter/wk06/research/stories.md){.header}
+### [Link to Needs-Finding (LO2)](./evidence/stories.md){.header}
 
 **Week 6 Job Story #2**:
 
@@ -37,7 +36,7 @@ Could not get a working implementation of the program - using given minimal vers
 
 ---
 
-### [Evaluation Tasks (4-5 tasks)](../../comp2850-hci-starter/backlog/backlog.csv){.header}
+### [Evaluation Tasks (4-5 tasks)](./evidence/backlog.csv){.header}
 
 #### [Task 1 (T1): Check that a popup appears on control switch]{.header}
 
@@ -97,10 +96,11 @@ Could not get a working implementation of the program - using given minimal vers
 
 - "Your participation is voluntary. You can stop at any time without giving a reason."
 - "Your data will be anonymous. I'll use a code (like P1) instead of your name."
+- "All session IDs will be denoted as PX_xxx, where PX is your code (e.g. P1) and xxx is a randomly generated string of characters."
 - "I may take screenshots and notes. I'll remove any identifying information."
 - "Do you consent to participate?" \[Wait for verbal yes\]
 
-**Recorded consent timestamp**: P1 consented 01/12/2025 13:30, P2 consented 6/12/2025
+**Recorded consent timestamp**: P1 consented 01/12/2025 13:30, P2 consented 06/12/2025 12:00
 
 ---
 
@@ -153,7 +153,7 @@ Could not get a working implementation of the program - using given minimal vers
 
 ---
 
-### [Fix 1: Updaing page to include a mode switching button](#fix-1-fix-name){.header}
+### [Fix 1: Updating page to include a mode switching button](#fix-1-fix-name){.header}
 
 **Addresses finding**: 2 (No method implemented to swap colour schemes)
 
@@ -427,7 +427,7 @@ html.dark #main-article > header .lead {
 
 **Why**: This imporves accessibility for people with sensitive eyes who may not know how to change browser settings
 
-**Impact**: Impoves UX as more people especially those with sensitive eyes can access the site. (1.4.3 improvement)
+**Impact**: Impoves UX as more people especially those with sensitive eyes can access the site. (1.4.3 improvement, 1.4.8 improvement)
 
 The theme is stored locally and will persist between running versions
 
@@ -866,36 +866,36 @@ input[readonly] {
 
 **Instructions**: Test all 20 criteria. Mark pass/fail/n/a + add notes.
 
-| Check            | Criterion                             | Level | Result        | Notes                                                                                                       |
-| ---------------- | ------------------------------------- | ----- | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| **Keyboard (5)** |                                       |       |               |                                                                                                             |
-| K1               | 2.1.1 All actions keyboard accessible | A     | Pass          | Navigated around entire page with tabs/tried inputs with enter only                                         |
-| K2               | 2.4.7 Focus visible                   | AA    | Pass          | Witnessed from K1 testing                                                                                   |
-| K3               | No keyboard traps                     | A     | Pass          | Can tab through all elements without issue                                                                  |
-| K4               | Logical tab order                     | A     | Pass          | Tabs always travels along a row before going down the the next one                                          |
-| K5               | Skip links present                    | AA    | Fail          | Skip link jumps to highlight the border of the form & requires a second to enter the first input box        |
-| **Forms (3)**    |                                       |       |               |                                                                                                             |
-| F1               | 3.3.2 Labels present                  | A     | Pass          | All inputs are described by aria in some way                                                                |
-| F2               | 3.3.1 Errors identified               | A     | Pass          | Error messages all have role="alert"                                                                        |
-| F3               | 4.1.2 Name/role/value                 | A     | Pass          | ALl form controls have appropriate simple names                                                             |
-| **Dynamic (3)**  |                                       |       |               |                                                                                                             |
-| D1               | 4.1.3 Status messages                 | AA    | Pass          | Status div has role=status                                                                                  |
-| D2               | Live regions work                     | AA    | \[pass/fail\] | \[e.g., "Tested with NVDA, announces 'Task added'"\]                                                        |
-| D3               | Focus management                      | A     | \[pass/fail\] | \[e.g., "Focus moves to error summary after submit"\]                                                       |
-| **No-JS (3)**    |                                       |       |               |                                                                                                             |
-| N1               | Full feature parity                   | ---   | Fail          | Most CRUD operations work without js - Update does not                                                      |
-| N2               | POST-Redirect-GET                     | ---   | Pass          | Only one submission on no-JS                                                                                |
-| N3               | Errors visible                        | A     | Fail          | Error summary is not shown in no-JS mode                                                                    |
-| **Visual (3)**   |                                       |       |               |                                                                                                             |
-| V1               | 1.4.3 Contrast minimum                | AA    | \[pass/fail]  | \[e.g., "All text 7.1:1 (AAA) via CCA"\]                                                                    |
-| V2               | 1.4.4 Resize text                     | AA    | Pass          | No content lost on zoom                                                                                     |
-| V3               | 1.4.11 Non-text contrast              | AA    | \[pass/fail\] | \[e.g., "Focus indicator 4.5:1"\]                                                                           |
-| **Semantic (3)** |                                       |       |               |                                                                                                             |
-| S1               | 1.3.1 Headings hierarchy              | A     | Pass          | h1 -> h2 -> p, small under appropriate inputs with no mixed ordering                                        |
-| S2               | 2.4.1 Bypass blocks                   | A     | Pass          | Can always skip past optional navigation/theme links using skip to main content (works with and without js) |
-| S3               | 1.1.1 Alt text                        | A     | Pass          | No images used in interface                                                                                 |
+| Check            | Criterion                             | Level | Result | Notes                                                                                                       |
+| ---------------- | ------------------------------------- | ----- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| **Keyboard (5)** |                                       |       |        |                                                                                                             |
+| K1               | 2.1.1 All actions keyboard accessible | A     | Pass   | Navigated around entire page with tabs/tried inputs with enter only                                         |
+| K2               | 2.4.7 Focus visible                   | AA    | Pass   | Witnessed from K1 testing                                                                                   |
+| K3               | No keyboard traps                     | A     | Pass   | Can tab through all elements without issue                                                                  |
+| K4               | Logical tab order                     | A     | Pass   | Tabs always travels along a row before going down the the next one                                          |
+| K5               | Skip links present                    | AA    | Fail   | Skip link jumps to highlight the border of the form & requires a second to enter the first input box        |
+| **Forms (3)**    |                                       |       |        |                                                                                                             |
+| F1               | 3.3.2 Labels present                  | A     | Pass   | All inputs are described by aria in some way                                                                |
+| F2               | 3.3.1 Errors identified               | A     | Pass   | Error messages all have role="alert"                                                                        |
+| F3               | 4.1.2 Name/role/value                 | A     | Pass   | ALl form controls have appropriate simple names                                                             |
+| **Dynamic (3)**  |                                       |       |        |                                                                                                             |
+| D1               | 4.1.3 Status messages                 | AA    | Pass   | Status div has role=status                                                                                  |
+| D2               | Live regions work                     | AA    | Pass   | Tested with NVDA, announces 'Task added/Approprate error message'                                           |
+| D3               | Focus management                      | A     | Pass   | Once task added, if erroneous, clear to see                                                                 |
+| **No-JS (3)**    |                                       |       |        |                                                                                                             |
+| N1               | Full feature parity                   | ---   | Fail   | Most CRUD operations work without js - Update does not                                                      |
+| N2               | POST-Redirect-GET                     | ---   | Pass   | Only one submission on no-JS                                                                                |
+| N3               | Errors visible                        | A     | Fail   | Error summary is not shown in no-JS mode                                                                    |
+| **Visual (3)**   |                                       |       |        |                                                                                                             |
+| V1               | 1.4.3 Contrast minimum                | AA    | Pass   | Dark mode body text is 15:1, Dark mode button text is 4.6:1; light mode has not been modified               |
+| V2               | 1.4.4 Resize text                     | AA    | Pass   | No content lost on zoom                                                                                     |
+| V3               | 1.4.11 Non-text contrast              | AA    | Pass   | Focus indicator is 3:1                                                                                      |
+| **Semantic (3)** |                                       |       |        |                                                                                                             |
+| S1               | 1.3.1 Headings hierarchy              | A     | Pass   | h1 -> h2 -> p, small under appropriate inputs with no mixed ordering                                        |
+| S2               | 2.4.1 Bypass blocks                   | A     | Pass   | Can always skip past optional navigation/theme links using skip to main content (works with and without js) |
+| S3               | 1.1.1 Alt text                        | A     | Pass   | No images used in interface                                                                                 |
 
-**Summary**: /20 pass, /20 fail **Critical failures** (if any): N3
+**Summary**: 17/20 pass, 3/20 fail **Critical failures** (if any): N3
 
 ---
 
@@ -903,16 +903,9 @@ input[readonly] {
 
 **Instructions**: Compare Week 9 baseline (pre-fix) to Week 10 (post-fix). Show improvement.
 
-::: table-wrapper
-Metric Before (Week 9, n=X) After (Week 10, n=Y) Change Target Met?
+Pre-fix: functionality in no-js was better, however despite meeting 1.4.3 (AA), it was found that only allowing a light mode prevented certain users with (especially those with photophobia) from comfortable use. This is a violation of 1.4.8 (AAA)
 
----
-
-SR error detection \[e.g., 0/2 (0%)\] \[e.g., 2/2 (100%)\] \[e.g., +100%\] \[✅/❌\]
-Validation error rate \[e.g., 33%\] \[e.g., 0%\] \[e.g., -33%\] \[✅/❌\]
-Median time \[Task X\] \[e.g., 1400ms\] \[e.g., 1150ms\] \[e.g., -250ms\] \[✅/❌\]
-WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
-:::
+Post-fix: functionality in no-js has decreased however it was deemed that due to the tiny proportion of people (<1% of internet traffic) that use no-js this is not significant. By adding a dark theme, we have made the interface more supportive for persons that experience photophobia (light sensitivity) (5-20% of the general population) which is a symptom that can arise from migraines, dry eye syndrome, or traumatic brain injuries. This fix rectifies the 1.4.11 violation and make 1.4.3 include more people
 
 ---
 
@@ -923,10 +916,11 @@ WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
 
 **Limitations / Honest reporting**:
 
-> - Not a massive improvement
->
 > - Theme change is useful for use in sunlight
->
+> - Likes the colour contrast in dark mode
+> - Adding multiple tasks concurrently is easy
+> - Being able to view task details without risking changing them is useful
+> - Adding a description helps with completing more complicated tasks
 > - Site works as expected
 
 ---
@@ -946,8 +940,8 @@ WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
 | [T5](./evidence/T5_evidence.png)            | P1 evidence screenshots for Task5                         | N/A                                                     |
 | [T6](./evidence/T6_evidence.png)            | P1 evidence screenshots for Task6                         | N/A                                                     |
 | [T7](./evidence/T7_evidence.png)            | P1 evidence screenshots for Task7                         | N/A                                                     |
-| [P-dark](./evidence/P-dark.png)             | P3: the new dark theme with button changed to say "Light" | Improvement 2 - 1.4.3 improvement                       |
-| [P-light](./evidence/P-light.png)           | P3: the light theme with button saying "Dark"             | Improvement 2 - 1.4.3 improvement                       |
+| [P-dark](./evidence/P-dark.png)             | P3: the new dark theme with button changed to say "Light" | Improvement 2 - 1.4.3/1.4.11/1.4.8 improvement          |
+| [P-light](./evidence/P-light.png)           | P3: the light theme with button saying "Dark"             | Improvement 2 - 1.4.3/1.4.11/1.4.8 improvement          |
 | [P-details](./evidence/P-details.png)       | P3: shows the new view to see task details                | Shows the requested details view                        |
 | [P-task_added](./evidence/P-task_added.png) | P3 colour contrast for the CRUD method complete popup     | Shows that WCAG 2.2 is not violated regardless of theme |
 
@@ -981,19 +975,19 @@ WCAG \[criterion\] pass \[fail\] \[pass\] \[--- \] \[✅/❌\]
 
 **Instructions**: Pick ONE finding and show complete evidence trail from data → fix → verification.
 
-**Finding selected**: \[e.g., "Finding #1 - SR errors not announced"\]
+**Finding selected**: Finding #3: No method implemented to swap colour schemes
 
 **Evidence trail**:
 
-1.  **Data**: metrics.csv lines 47-49 show P2 (SR user) triggered validation_error 3 times
-2.  **Observation**: P2 pilot notes timestamp 14:23 - Quote: "I don't know if it worked, didn't hear anything"
-3.  **Screenshot**: before-sr-error.png shows error message has no role="alert" or aria-live
-4.  **WCAG**: 3.3.1 Error Identification (Level A) violation - errors not programmatically announced
-5.  **Prioritisation**: findings-table.csv row 1 - Priority score 7 (Impact 5 + Inclusion 5 - Effort 3)
-6.  **Fix**: implementation-diffs.md Fix #1 - Added role="alert" + aria-live="assertive" to error span
-7.  **Verification**: verification.csv Part A row F2 - 3.3.1 now PASS (tested with NVDA)
-8.  **Before/after**: verification.csv Part B - SR error detection improved from 0% to 100%
-9.  **Re-pilot**: P5 (SR user) pilot notes - "Heard error announcement immediately, corrected and succeeded"
+1.  **Data**: N/A
+2.  **Observation**: P1 pilot notes: "No way of changing theme in the webpage" & "After manually changing browser theme, there were no issues with readability in dark mode - preferred"
+3.  **Screenshot**: T2_missing-btn.png shows there is no way to change the theme without manually changing browser preferences - this process is not intuitive and does not provide an accessible user experience for all individuals regardless of their comfort using technology.
+4.  **WCAG**: 1.4.8
+5.  **Prioritisation**: (findings-table.csv)[./evidence/findings-table.csv] row 3 - Priority score 5 (Impact 4 + Inclusion 3 - Effort 2)
+6.  **Fix**: Fix 1: Updating page to include a mode switching button - outlined above
+7.  **Verification**: P-light.png/P-dark.png - shows both of the new modes with a clearly outlined and labelled button that adheres to 1.4.3 contrast rule providing an easily accessible method to change between theme modes (fixes 1.4.8 violation), and does not violate 1.4.3/1.4.11
+8.  **Before/after**: Foreground and background colours can now be changed easily by the user when there was no prior implementation to do this
+9.  **Re-pilot**: P3 (keyboard + HTMX user) pilot notes - "Theme change is useful for use in sunlight"
 
 **Complete chain**: Data → Observation → Interpretation → Fix → Verification ✅
 
