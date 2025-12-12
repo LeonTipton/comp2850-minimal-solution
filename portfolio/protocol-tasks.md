@@ -138,6 +138,9 @@ Could not get a working implementation of the program - using given minimal vers
 
 > [metrics.csv](../data/metrics.csv)
 
+P1 is lines 90-104
+P2 is lines 105-126
+
 **Participant summary**:
 
 - **P1**: Variant - "Standard mouse + HTMX"
@@ -913,6 +916,7 @@ Post-fix: functionality in no-js has decreased however it was deemed that due to
 
 - **P3** (post-fix): keyboard preference, with js
   -- Consent script (above) read & consented to 11/12/2025
+  -- [metrics.csv](../data/metrics.csv) lines 805-840
 
 **Limitations / Honest reporting**:
 
@@ -947,7 +951,7 @@ Post-fix: functionality in no-js has decreased however it was deemed that due to
 
 **PII check**:
 
-- All screenshots cropped to show only relevant UI
+- All screenshots cropped to show only relevant UIlines AN
 - Browser bookmarks/tabs not visible
 - Participant names/emails blurred or not visible
 
