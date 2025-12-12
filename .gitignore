@@ -25,4 +25,4 @@ package-lock.json
 slides-output/
 
 # Raw screenshots from pilots
-./portfolio/evidence/rawf/*
+./portfolio/evidence/rawf/
